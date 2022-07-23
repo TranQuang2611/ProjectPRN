@@ -114,6 +114,32 @@ namespace WheyStoreVN.Controllers
             }
         }
 
+        public IActionResult ManageProduct()
+        {
+            Admin admin = new Admin();
+            if (HttpContext.Session.GetString("account") != null)
+            {
+                if (HttpContext.Session.GetString("admin") != null)
+                {
+                    List<Order> order = new List<Order>();
+                    using (var context = new WheystoreContext())
+                    {
+                        order = context.Orders.Where(x => x.OrderDetails.Count > 0).ToList();
+                    }
+                    return View(order);
+                }
+                else
+                {
+                    return Redirect("/Home/Home");
+                }
+
+            }
+            else
+            {
+                return Redirect("/Login/Login");
+            }
+        }
+
         public IActionResult RejectProduct()
         {
             Admin admin = new Admin();
