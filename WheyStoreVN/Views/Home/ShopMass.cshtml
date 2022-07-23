@@ -1,0 +1,192 @@
+﻿@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<ProductDetail>
+<!--================Category Product Area =================-->
+<section class="cat_product_area section_gap">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-9">
+                <div class="product_top_bar">
+                    <div class="left_dorp">
+                        <select class="sorting">
+                            <option value="1">Default sorting</option>
+                            <option value="2">Default sorting 01</option>
+                            <option value="4">Default sorting 02</option>
+                        </select>
+                        <select class="show">
+                            <option value="1">Show 12</option>
+                            <option value="2">Show 14</option>
+                            <option value="4">Show 16</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="latest_product_inner">
+                    <div class="row">
+                        @foreach (var pro1 in Model)
+                        {
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img class="card-img"
+                                         src="~/IMGproject/@pro1.Img"
+                                         alt="" />
+                                        <div class="p_icon">
+                                            <a href="/Product/ProductDetail?pid=@pro1.ProductId&dtid=@pro1.DetailId">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="/User/AddFavorite?id=@pro1.DetailId&url=/Home/ShopMass/@ViewBag.Id">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>@pro1.Name</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">@(string.Format(CultureInfo.GetCultureInfo("vi-VN"),"{0:C}",pro1.SellPrice))</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div style="padding-top:50px">
+                    @Html.Raw(@ViewBag.subcat)
+                </div>
+                <div style="padding-top:50px">
+                    @Html.Raw(@ViewBag.cat)
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Sữa tăng cân</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                <li class=@(ViewBag.Id == 5 ? "active" : "")>
+                                    <a href="/Home/ShopMass/5">Tăng cân nhanh</a>
+
+                                </li>
+                                <li class=@(ViewBag.Id == 6 ? "active" : "")>
+                                    <a href="/Home/ShopMass/6">Tăng cân ít mỡ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                    <form action="/Home/ShopMass" method="get">
+                    <input  name="id" value="@ViewBag.Id" type="hidden"/>
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Thương hiệu</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (var brand in ViewBag.brand)
+                                {
+                                    <li class="">
+                                        <input type="checkbox" name="brand" value="@brand.BrandId")/><label style="padding-left:20px">@brand.Name</label>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Trọng lượng</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (var size in ViewBag.size)
+                                {
+                                    <li class="">
+                                        <input type="checkbox" name="size" value="@size.SizeId"/><label style="padding-left:20px">@size.Description</label>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Hương vị</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (var savor in ViewBag.savor)
+                                {
+                                    <li class="">
+                                        <input type="checkbox" name="savor" value="@savor.SavorId"/><label style="padding-left:20px">@savor.Description</label>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Xuất xứ</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (var co in ViewBag.country)
+                                {
+                                    <li>
+                                        <input type="checkbox" name="country" value="@co.CountryId"/><label style="padding-left:20px">@co.Name</label>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Price Filter</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                <li>
+                                    <input style="width:167px" type="range" id="myRange" class="slider" min="0" max="5000000" name="price"/><label style="padding-left:20px"></label>
+                                </li>
+                                <li>
+                                    <p id="demo"></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <div style="display:flex;justify-content:center">
+                        <button class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+        var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value + " đồng"; // Display the default slider value
+    console.log(output);
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+      output.innerHTML = this.value + " đồng";
+      console.log(slider.value)
+    }
+</script>
+
+<!--================End Category Product Area =================-->

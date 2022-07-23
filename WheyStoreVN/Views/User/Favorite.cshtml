@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<FavoriteProduct>
+<div style="padding-top:20px;display: flex; justify-content:center">
+    <div style="display: flex; justify-content:center;width: 70%;background-color:#eee;padding-top:20px">
+        <h2>Danh sách sản phẩm yêu thích</h2>
+    </div>
+</div>
+
+
+@if (Model.Count > 0)
+{
+    <div style="display:flex;justify-content:center; padding-top:50px">
+        <table class="table table-hover" style="width:70%">
+            <thead>
+                <tr>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pro in Model)
+                {
+                    <tr>
+                        <th scope="row">@pro.Detail.Name</th>
+                        <td><img src="~/IMGproject/@pro.Detail.Img" style="width:100px" /></td>
+                        <td>@pro.Detail.SellPrice</td>
+                        <td><a href="/User/DeleteFavorite/@pro.DetailId" onclick="return confirm('Bạn có thực sự muốn xóa không');">Xóa</a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div style="display:flex;justify-content:center; padding-top:50px">
+        <h3>Chưa có sản phẩm yêu thích</h3>
+    </div>
+
+    <div style="display:flex;justify-content:center; padding-top:50px;padding-bottom:100px">
+        <a href="/Home/Home">Về mua hàng</a>
+    </div>
+}
